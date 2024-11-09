@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @include('components.header-seller')
 @section('content')
-<div class="container mx-auto mt-20">
+<div class="container mx-auto mt-20 mb-24">
     <div class="flex flex-col md:flex-row">
         @include('components.chat-list', ['userChats' => $userChats]) <!-- Подключаем компонент список чатов -->
 
         <div class="w-full md:w-3/4 p-4"> <!-- Чат занимает всю ширину на маленьких экранах и 3/4 на больших -->
-            @if($chat && $advert)
+            @if($chat && $advert) 
                 <h5 class="text-xl font-semibold mb-4">
                     <a href="{{ route('advert.show', ['advert' => $advert->id]) }}" class="text-blue-500 hover:underline">
                         {{ $advert->product_name }} <!-- Здесь отображается название объявления -->
@@ -22,17 +22,10 @@
                             @endphp
                         @endif
                         <div class="message @if($message->user_id === auth()->id()) sent @else received @endif">
-                            <img src="{{ $message->user->avatar_url }}" alt="Аватар" class="w-10 h-10 rounded-full avatar">
+                        <img src="{{ $message->user->avatar_url ?: asset('images/noava.jpg') }}" alt="Аватар" class="w-10 h-10 rounded-full avatar">
                             <div class="message-content">
                                 <strong>{{ $message->user->username }}</strong> {{ $message->message }}
-                                <span class="text-muted text-xs text-gray-500">{{ $message->created_at->diffForHumans() }}</span>
-                                @if($message->user_id !== auth()->id())
-                                    @if($message->is_read)
-                                        <img src="{{ asset('images/messageyes.png') }}" alt="Прочитано" class="status-icon w-4">
-                                    @else
-                                        <img src="{{ asset('images/messageno.png') }}" alt="Не прочитано" class="status-icon w-4">
-                                    @endif
-                                @endif
+                               
                             </div>
                         </div>
                     @endforeach
@@ -160,7 +153,7 @@ $(document).ready(function() {
     }
 
     // Запускаем функцию каждые 5 секунд (опционально)
-    setInterval(fetchMessages, 5000);
+    // setInterval(fetchMessages, 5000);
 
     // Отмечаем сообщения как прочитанные при загрузке страницы
     markMessagesAsRead('{{ $chat->id }}');

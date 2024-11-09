@@ -83,11 +83,11 @@
 <!-- Меню -->
 <div id="menu" class="hidden fixed top-[70px] left-0 w-full h-full bg-white z-30 flex flex-col justify-center items-center">
     <ul class="space-y-4 text-center">
-        <li><a href="#" class="block text-lg text-gray-700 hover:text-gray-900">Добавить компанию</a></li>
-        <li><a href="#" class="block text-lg text-gray-700 hover:text-gray-900">О проекте</a></li>
-        <li><a href="#" class="block text-lg text-gray-700 hover:text-gray-900">Оферта</a></li>
-        <li><a href="#" class="block text-lg text-gray-700 hover:text-gray-900">Франшиза</a></li>
-        <li><a href="#" class="block text-lg text-gray-700 hover:text-gray-900">Контакты</a></li>
+        
+        <li><a href="{{route('about')}}" class="block text-lg text-gray-700 hover:text-gray-900">О проекте</a></li>
+        <li><a href="{{route('oferta')}}" class="block text-lg text-gray-700 hover:text-gray-900">Оферта</a></li>
+        <li><a href="{{route('franchise.index')}}" class="block text-lg text-gray-700 hover:text-gray-900">Франшиза</a></li>
+        <li><a href="{{route('help.index')}}" class="block text-lg text-gray-700 hover:text-gray-900">Справка</a></li>
     </ul>
 </div>
 

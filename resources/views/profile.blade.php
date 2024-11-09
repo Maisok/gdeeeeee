@@ -9,7 +9,7 @@
 <body class="bg-gray-100 font-sans">
 @include('components.header-seller')
 
-<div class="container mx-auto px-4 py-6">
+<div class="container mx-auto px-4 py-6 mb-20">
     <h2 class="text-2xl font-bold text-center mb-6">Профиль пользователя</h2>
     
     <div id="user-profile" class="bg-white p-6 rounded-lg shadow-md">
@@ -47,9 +47,10 @@
 
         <!-- Кнопка редактирования профиля -->
         <a href="{{ route('profile.edit', $user->id) }}" class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Редактировать профиль</a>
-
         @if($user->user_status == 1)
             <a href="{{ route('tariff.settings') }}" class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Настроить тариф</a>
+            <a href="{{ route('adverts.create') }}" class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 lg:hidden">Разместить товары</a>
+            <a href="{{ route('adverts.my_adverts') }}" class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700  lg   :hidden">Мои товары</a>
         @endif
     </div>
 </div>
