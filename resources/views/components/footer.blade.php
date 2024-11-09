@@ -1,4 +1,4 @@
-@vite('resources/css/app.css')
+<script src="https://cdn.tailwindcss.com"></script>
 <footer class="bg-white bg-opacity-80 text-white py-20 text-center shadow-inner shadow-gray-300 mt-20 w-full hidden md:block">
     <div class="logo2 flex justify-between items-center w-full max-w-screen-2xl mx-auto">
         <a href="{{ \App\Helpers\UrlHelper::generateUrlWithCity('adverts.index', null, request()->get('city')) }}" class="text-black text-xl p-2">

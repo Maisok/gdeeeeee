@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Авторизация</title>
-    @vite('resources/css/app.css')
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="font-sans bg-gray-100 mt-40">
     @include('components.header-seller')   

@@ -1,4 +1,4 @@
-@vite('resources/css/app.css')
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="{{ asset('js/header.js') }}" defer></script>
 <script>
     const baseUrl = '{{ url()->current() }}'; // Передаем текущий URL в JavaScript

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @include('components.header-seller')
-@vite('resources/css/app.css')
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
 
 @section('content')
