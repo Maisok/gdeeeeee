@@ -14,9 +14,8 @@
 @include('components.header-seller')   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script> 
 <!-- Рекламный баннер -->
-<h1 class="hidden md:block"></h1>
-<img src="{{ asset('images/banner.png') }}"  alt="Реклама" class="banner w-11/12 mx-auto rounded-2xl hidden md:block">
-<p class="hidden md:block"></p>
+
+<img src="{{ asset('images/banner.png') }}"  alt="Реклама" class="w-11/12 mx-auto rounded-2xl hidden md:block mt-20">
 
 <h2 class="text-2xl font-bold mt-8 mb-4 text-center">Поиск запчастей:</h2>
 @include('components.search-form') <!-- Подключение формы поиска -->

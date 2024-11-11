@@ -11,25 +11,41 @@
             class="w-full md:w-auto flex-grow px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500"
         />
 
-        <!-- Brand Input with Autocomplete -->
-        <input
-            type="text"
-            id="brand-input"
-            name="brand_input"
-            placeholder="Введите марку"
-            class="w-full md:w-auto flex-grow px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500"
-        />
-        <input type="hidden" id="brand" name="brand" value="{{ request()->get('brand') }}">
+        <!-- Brand Input with Dropdown -->
+        <div class="relative">
+            <input
+                type="text"
+                id="brand-input"
+                name="brand_input"
+                placeholder="Введите марку"
+                class="w-full md:w-auto flex-grow px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500"
+            />
+            <input type="hidden" id="brand" name="brand" value="{{ request()->get('brand') }}">
+            <button type="button" id="brand-dropdown-toggle" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div id="brand-dropdown" class="hidden absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-40 overflow-y-auto">
+                <!-- Brand options will be populated here -->
+            </div>
+        </div>
 
-        <!-- Model Input with Autocomplete -->
-        <input
-            type="text"
-            id="model-input"
-            name="model_input"
-            placeholder="Введите модель"
-            class="w-full md:w-auto flex-grow px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500"
-        />
-        <input type="hidden" id="model" name="model" value="{{ request()->get('model') }}">
+        <!-- Model Input with Dropdown -->
+        <div class="relative">
+            <input
+                type="text"
+                id="model-input"
+                name="model_input"
+                placeholder="Введите модель"
+                class="w-full md:w-auto flex-grow px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500"
+            />
+            <input type="hidden" id="model" name="model" value="{{ request()->get('model') }}">
+            <button type="button" id="model-dropdown-toggle" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div id="model-dropdown" class="hidden absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-40 overflow-y-auto">
+                <!-- Model options will be populated here -->
+            </div>
+        </div>
 
         <!-- Year Select -->
         <select
@@ -137,6 +153,76 @@
             var model = $(this).val();
             $('#model').val(model); // Устанавливаем значение в скрытое поле
             $('#model-input').autocomplete("search", model); // Обновляем автодополнение для модели
+        });
+
+        // Обработчик для открытия/закрытия выпадающего списка марки
+        $('#brand-dropdown-toggle').on('click', function() {
+            $('#brand-dropdown').toggleClass('hidden');
+        });
+
+        // Обработчик для открытия/закрытия выпадающего списка модели
+        $('#model-dropdown-toggle').on('click', function() {
+            $('#model-dropdown').toggleClass('hidden');
+        });
+
+        // Заполнение выпадающего списка марки
+        $('#brand-input').on('input', function() {
+            var term = $(this).val();
+            $.ajax({
+                url: '{{ route('get.brands') }}',
+                type: 'GET',
+                data: { term: term },
+                success: function(data) {
+                    var dropdown = $('#brand-dropdown');
+                    dropdown.empty();
+                    $.each(data, function(index, item) {
+                        dropdown.append('<div class="p-2 hover:bg-gray-100 cursor-pointer" data-value="' + item + '">' + item + '</div>');
+                    });
+                    dropdown.removeClass('hidden');
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                }
+            });
+        });
+
+        // Заполнение выпадающего списка модели
+        $('#model-input').on('input', function() {
+            var term = $(this).val();
+            var brand = $('#brand').val();
+            $.ajax({
+                url: '{{ route('get.models') }}',
+                type: 'GET',
+                data: { term: term, brand: brand },
+                success: function(data) {
+                    var dropdown = $('#model-dropdown');
+                    dropdown.empty();
+                    $.each(data, function(index, item) {
+                        dropdown.append('<div class="p-2 hover:bg-gray-100 cursor-pointer" data-value="' + item + '">' + item + '</div>');
+                    });
+                    dropdown.removeClass('hidden');
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                }
+            });
+        });
+
+        // Обработчик для выбора элемента из выпадающего списка марки
+        $('#brand-dropdown').on('click', 'div', function() {
+            var value = $(this).data('value');
+            $('#brand-input').val(value);
+            $('#brand').val(value);
+            $('#brand-dropdown').addClass('hidden');
+            updateModels(value);
+        });
+
+        // Обработчик для выбора элемента из выпадающего списка модели
+        $('#model-dropdown').on('click', 'div', function() {
+            var value = $(this).data('value');
+            $('#model-input').val(value);
+            $('#model').val(value);
+            $('#model-dropdown').addClass('hidden');
         });
     });
 </script>
